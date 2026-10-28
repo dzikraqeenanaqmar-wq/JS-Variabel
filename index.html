@@ -1,66 +1,709 @@
 <!DOCTYPE html>
-<html lang="id" class="dark">
+<html lang="id" class="dark scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LKPD JavaScript - Variabel & Tipe Data | Chainsaw Man Edition</title>
+    <title>JS Variables & Data Types Masterclass - Chainsaw Man Edition</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Space Grotesk & JetBrains Mono -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        csm: {
-                            orange: '#FF4500',
-                            red: '#DC2626',
-                            dark: '#0F0F0F',
-                            card: '#1A1A1A',
-                            border: '#2D2D2D',
-                            text: '#E5E7EB'
+                        chainsaw: {
+                            yellow: '#eab308',
+                            red: '#ef4444',
+                            steel: '#0f172a',
+                            dark: '#090d16',
+                            card: '#1e293b',
+                            blonde: '#facc15',
+                            gray: '#334155',
+                            blood: '#991b1b',
+                            accent: '#f59e0b'
                         }
+                    },
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
                     }
                 }
             }
         }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .font-code { font-family: 'Fira Code', monospace; }
-        .glow-orange { box-shadow: 0 0 25px rgba(255, 69, 0, 0.25); }
+        body {
+            background-color: #090d16;
+            color: #FFFFFF;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #eab308;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ef4444;
+        }
+
+        /* Active Nav Tab Styling */
+        .nav-link.active {
+            color: #eab308;
+            border-bottom-color: #eab308;
+            background-color: rgba(234, 179, 8, 0.1);
+        }
     </style>
 </head>
-<body class="bg-csm-dark text-csm-text min-h-screen selection:bg-csm-orange selection:text-white">
+<body class="min-h-screen flex flex-col justify-between selection:bg-chainsaw-red selection:text-white">
 
-    <!-- Header / Navbar -->
-    <header class="sticky top-0 z-50 bg-csm-card/90 backdrop-blur border-b border-csm-border">
-        <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-csm-red to-csm-orange flex items-center justify-center font-extrabold text-white text-xl shadow-lg">
-                    ⚡
-                </div>
+    <!-- NAVBAR FIXED -->
+    <nav class="sticky top-0 z-50 bg-chainsaw-steel/95 backdrop-blur border-b border-chainsaw-yellow/30 px-4 sm:px-8 py-3">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <span class="text-3xl animate-pulse">🪚</span>
                 <div>
-                    <h1 class="font-extrabold text-lg tracking-tight text-white">JS : Variabel & Tipe Data</h1>
-                    <p class="text-xs text-csm-orange font-semibold">Chainsaw Man Special Edition</p>
+                    <h1 class="text-xl font-black text-chainsaw-yellow tracking-wider flex items-center gap-2">
+                        JS VARIABEL <span class="bg-chainsaw-red text-white text-[10px] px-2 py-0.5 rounded font-mono uppercase tracking-widest">Masterclass</span>
+                    </h1>
+                    <p class="text-xs text-slate-400">Modul Belajar Pemrograman JavaScript Dasar</p>
                 </div>
             </div>
-            <div class="hidden md:flex space-x-6 text-sm font-medium text-gray-400">
-                <a href="#materi" class="hover:text-csm-orange transition">Materi</a>
-                <a href="#tipe-data" class="hover:text-csm-orange transition">Tipe Data</a>
-                <a href="#console" class="hover:text-csm-orange transition">Console & Error</a>
-                <a href="#sandbox" class="hover:text-csm-orange transition">Playground</a>
+
+            <!-- Navigation Links -->
+            <div class="flex flex-wrap items-center gap-1 sm:gap-2 text-xs sm:text-sm font-semibold">
+                <a href="#pengertian" class="nav-link px-3 py-1.5 rounded-t-md text-slate-300 hover:text-chainsaw-yellow border-b-2 border-transparent transition">1. Konsep</a>
+                <a href="#deklarasi" class="nav-link px-3 py-1.5 rounded-t-md text-slate-300 hover:text-chainsaw-yellow border-b-2 border-transparent transition">2. Deklarasi</a>
+                <a href="#naming" class="nav-link px-3 py-1.5 rounded-t-md text-slate-300 hover:text-chainsaw-yellow border-b-2 border-transparent transition">3. Penamaan</a>
+                <a href="#tipedata" class="nav-link px-3 py-1.5 rounded-t-md text-slate-300 hover:text-chainsaw-yellow border-b-2 border-transparent transition">4. Tipe Data</a>
+                <a href="#console" class="nav-link px-3 py-1.5 rounded-t-md text-slate-300 hover:text-chainsaw-yellow border-b-2 border-transparent transition">5. console.log()</a>
+                <a href="#errors" class="nav-link px-3 py-1.5 rounded-t-md text-slate-300 hover:text-chainsaw-yellow border-b-2 border-transparent transition">6. Pahami Error</a>
+                <a href="#playground" class="nav-link px-3 py-1.5 rounded-t-md text-slate-300 hover:text-chainsaw-yellow border-b-2 border-transparent transition">7. Playground</a>
+            </div>
+
+            <!-- User Badge / Identity Header -->
+            <div class="hidden lg:flex items-center gap-2 bg-chainsaw-dark border border-chainsaw-yellow/40 px-3 py-1.5 rounded-xl text-xs">
+                <i class="fa-solid fa-user-astronaut text-chainsaw-yellow"></i>
+                <div class="text-left leading-tight">
+                    <p class="font-bold text-white">DZIKRA QEENAN AQMAR</p>
+                    <p class="text-[10px] text-chainsaw-yellow font-mono">X PPLG 2</p>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="relative bg-gradient-to-b from-chainsaw-steel via-chainsaw-dark to-chainsaw-dark border-b-4 border-chainsaw-yellow pt-10 pb-14 px-4 sm:px-8 overflow-hidden shadow-2xl">
+        <div class="max-w-6xl mx-auto relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+            <div class="md:col-span-2 space-y-4 text-center md:text-left">
+                <div class="inline-flex flex-wrap items-center gap-2 px-3 py-1 bg-chainsaw-red/20 border border-chainsaw-red text-chainsaw-red text-xs font-bold rounded-full">
+                    <span><i class="fa-solid fa-fire"></i> Panduan Lengkap JavaScript Fundamental</span>
+                    <span class="text-white">|</span>
+                    <span class="text-chainsaw-yellow font-mono"><i class="fa-solid fa-id-card"></i> DZIKRA QEENAN AQMAR (X PPLG 2)</span>
+                </div>
+                <h1 class="text-4xl sm:text-6xl font-black text-white tracking-tight leading-none">
+                    PELAJARI VARIABEL & TIPE DATA SEPERTI <span class="text-chainsaw-yellow underline decoration-chainsaw-red">DENJI</span>!
+                </h1>
+                <p class="text-slate-300 text-base sm:text-lg leading-relaxed">
+                    Kuasai konsep dasar penyimpanan data dalam JavaScript: <code class="text-chainsaw-yellow font-mono">var</code>, <code class="text-chainsaw-red font-mono">let</code>, <code class="text-chainsaw-blonde font-mono">const</code>, tipe data lengkap, penggunaan <code class="text-green-400 font-mono">console.log()</code>, hingga memahami bahwa <strong>Error bukanlah kegagalan</strong>, melainkan petunjuk debugging!
+                </p>
+            </div>
+
+            <!-- Mascot Badge -->
+            <div class="flex justify-center">
+                <div class="relative group w-64">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-chainsaw-yellow via-chainsaw-red to-chainsaw-blonde rounded-3xl blur opacity-75 group-hover:opacity-100 transition duration-500"></div>
+                    <div class="relative bg-chainsaw-card border-2 border-chainsaw-yellow p-6 rounded-2xl text-center space-y-3">
+                        <div class="w-20 h-20 mx-auto bg-chainsaw-yellow rounded-2xl flex items-center justify-center text-chainsaw-dark text-4xl shadow-inner font-black">
+                            🐶
+                        </div>
+                        <h4 class="font-bold text-chainsaw-yellow text-lg">Pochita Approved</h4>
+                        <p class="text-xs text-slate-400">"Variabel ibarat wadah Pochita menyimpan kekuatan iblis di dalam dada Denji!"</p>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
 
-    <main class="max-w-5xl mx-auto px-4 py-8 space-y-12">
+    <!-- MAIN CONTENT -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-8 py-12 space-y-20 flex-grow">
 
-        <!-- Hero Section -->
-        <section class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-neutral-900 via-neutral-900 to-red-950 border border-csm-border p-8 md:p-12 glow-orange">
-            <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-csm-orange/10 rounded-full blur-3xl pointer-events-none"></div>
-            <div class="relative z-10 max-w-2xl space-y-4">
-                <span class="px-3 py-1 rounded-full text-xs font-bold bg-csm-orange/20 text-csm-orange border border-csm-orange/30">
-                    Modul Belajar Interaktif X PPLG
-                </span>
+        <!-- BAB 1: PENGERTIAN VARIABEL -->
+        <section id="pengertian" class="space-y-6">
+            <div class="flex items-center gap-3 border-l-4 border-chainsaw-yellow pl-4">
+                <h2 class="text-2xl sm:text-3xl font-black text-white uppercase tracking-wider">
+                    1. Pengertian Variabel & Analogi
+                </h2>
+            </div>
+
+            <div class="bg-chainsaw-card border border-slate-700 rounded-2xl p-6 sm:p-8 space-y-6 shadow-xl">
+                <p class="text-slate-300 text-base leading-relaxed">
+                    Dalam dunia pemrograman, <strong>Variabel</strong> adalah nama tempat di memori komputer yang digunakan untuk **menyimpan data**. Data ini nantinya dapat kita baca, diubah, atau dihitung oleh script JavaScript kita.
+                </p>
+
+                <!-- Analogi Box Card -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+                    <div class="bg-chainsaw-dark border border-chainsaw-yellow/40 rounded-xl p-5 text-center space-y-3">
+                        <div class="text-4xl">📦</div>
+                        <h3 class="font-bold text-chainsaw-yellow text-base">Analogi Wadah / Kotak</h3>
+                        <p class="text-xs text-slate-400">
+                            Bayangkan variabel seperti <strong>kotak penyimpanan</strong>. Anda bisa memasukkan barang (data) ke dalamnya dan mengambilnya sewaktu-waktu.
+                        </p>
+                    </div>
+
+                    <div class="bg-chainsaw-dark border border-chainsaw-red/40 rounded-xl p-5 text-center space-y-3">
+                        <div class="text-4xl">🏷️</div>
+                        <h3 class="font-bold text-chainsaw-red text-base">Label / Nama Variabel</h3>
+                        <p class="text-xs text-slate-400">
+                            Setiap kotak diberi nama unik (seperti <code class="text-white font-mono">namaKarakter</code> atau <code class="text-white font-mono">jumlahDarah</code>) agar program tahu kotak mana yang dipanggil.
+                        </p>
+                    </div>
+
+                    <div class="bg-chainsaw-dark border border-chainsaw-blonde/40 rounded-xl p-5 text-center space-y-3">
+                        <div class="text-4xl">🥩</div>
+                        <h3 class="font-bold text-chainsaw-blonde text-base">Isi / Nilai Data</h3>
+                        <p class="text-xs text-slate-400">
+                            Isi di dalam kotak bisa berupa teks ("Denji"), angka (100), status boolean (true), atau data rumit lainnya.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BAB 2: DEKLARASI (VAR, LET, CONST) & SCOPE -->
+        <section id="deklarasi" class="space-y-6">
+            <div class="flex items-center gap-3 border-l-4 border-chainsaw-red pl-4">
+                <h2 class="text-2xl sm:text-3xl font-black text-white uppercase tracking-wider">
+                    2. Cara Deklarasi: var, let, dan const
+                </h2>
+            </div>
+
+            <!-- Tabel Komparasi -->
+            <div class="bg-chainsaw-card border border-slate-700 rounded-2xl p-6 shadow-xl space-y-6">
+                <h3 class="text-xl font-bold text-chainsaw-yellow">Tabel Perbedaan Deklarasi Variabel</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm border-collapse">
+                        <thead>
+                            <tr class="bg-chainsaw-steel text-chainsaw-yellow font-mono border-b border-slate-700">
+                                <th class="p-3">Keyword</th>
+                                <th class="p-3">Tipe Scope</th>
+                                <th class="p-3">Bisa Diubah Nilainya? (Re-assign)</th>
+                                <th class="p-3">Bisa Dideklarasi Ulang?</th>
+                                <th class="p-3">Perilaku Hoisting</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800 text-slate-300">
+                            <tr class="hover:bg-chainsaw-steel/50">
+                                <td class="p-3 font-mono font-bold text-chainsaw-yellow">var</td>
+                                <td class="p-3">Function Scope</td>
+                                <td class="p-3 text-green-400">✅ Ya</td>
+                                <td class="p-3 text-green-400">✅ Ya</td>
+                                <td class="p-3 text-yellow-400">Di-hoist (Nilai: undefined)</td>
+                            </tr>
+                            <tr class="hover:bg-chainsaw-steel/50">
+                                <td class="p-3 font-mono font-bold text-chainsaw-red">let</td>
+                                <td class="p-3">Block Scope { }</td>
+                                <td class="p-3 text-green-400">✅ Ya</td>
+                                <td class="p-3 text-red-400">❌ Tidak</td>
+                                <td class="p-3 text-red-400">TDZ (Temporal Dead Zone)</td>
+                            </tr>
+                            <tr class="hover:bg-chainsaw-steel/50">
+                                <td class="p-3 font-mono font-bold text-chainsaw-blonde">const</td>
+                                <td class="p-3">Block Scope { }</td>
+                                <td class="p-3 text-red-400">❌ Tidak (Tetap/Konstan)</td>
+                                <td class="p-3 text-red-400">❌ Tidak</td>
+                                <td class="p-3 text-red-400">TDZ (Temporal Dead Zone)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Detail Scope & Hoisting -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-chainsaw-card border border-slate-700 rounded-2xl p-6 space-y-4">
+                    <h3 class="text-lg font-bold text-chainsaw-red flex items-center gap-2">
+                        <i class="fa-solid fa-layer-group"></i> Mengenal Block Scope vs Function Scope
+                    </h3>
+                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                        - <strong>Block Scope { }:</strong> Variabel <code class="text-chainsaw-red font-mono">let</code> & <code class="text-chainsaw-blonde font-mono">const</code> hanya hidup di dalam kurung kurawal `{ }` tempat dia dibuat. Di luar kurung kurawal, variabel tersebut **tidak dapat diakses**.
+                        <br><br>
+                        - <strong>Function Scope:</strong> Variabel <code class="text-chainsaw-yellow font-mono">var</code> menembus kurung kurawal biasa (seperti <code class="font-mono">if</code> atau <code class="font-mono">for</code>), tetapi terkurung di dalam fungsi.
+                    </p>
+                </div>
+
+                <div class="bg-chainsaw-card border border-slate-700 rounded-2xl p-6 space-y-4">
+                    <h3 class="text-lg font-bold text-chainsaw-blonde flex items-center gap-2">
+                        <i class="fa-solid fa-ghost"></i> Apa itu Hoisting & TDZ?
+                    </h3>
+                    <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                        JavaScript akan membaca dan mengangkat (hoist) semua deklarasi variabel ke bagian paling atas kode sebelum mengeksekusinya.
+                    </p>
+                    <div class="bg-chainsaw-dark p-3 rounded-lg border border-slate-800 font-mono text-xs text-slate-300 space-y-1">
+                        <p class="text-slate-500">// VAR: menghasilkan undefined jika dipanggil sebelum deklarasi</p>
+                        <p>console.log(b); <span class="text-yellow-400">// output: undefined</span></p>
+                        <p>var b = "Denji";</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BAB 3: ATURAN NAMING CONVENTION -->
+        <section id="naming" class="space-y-6">
+            <div class="flex items-center gap-3 border-l-4 border-chainsaw-yellow pl-4">
+                <h2 class="text-2xl sm:text-3xl font-black text-white uppercase tracking-wider">
+                    3. Aturan Penulisan Nama Variabel
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Syarat Penulisan -->
+                <div class="bg-chainsaw-card border border-slate-700 rounded-2xl p-6 space-y-4">
+                    <h3 class="text-lg font-bold text-chainsaw-yellow">Aturan Wajib Karakter</h3>
+                    <ul class="space-y-2 text-xs sm:text-sm text-slate-300">
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-400 font-bold">✓</span>
+                            Dapat diawali dengan huruf (<code class="font-mono text-chainsaw-yellow">a-z, A-Z</code>), garis bawah (<code class="font-mono text-chainsaw-yellow">_</code>), atau tanda dollar (<code class="font-mono text-chainsaw-yellow">$</code>).
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-red-400 font-bold">✗</span>
+                            <strong>DILARANG</strong> diawali dengan angka! (Contoh salah: <code class="font-mono text-red-400">1denji</code>).
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-red-400 font-bold">✗</span>
+                            Tidak boleh memakai spasi atau karakter khusus seperti <code class="font-mono text-red-400">@-#!%</code>.
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-yellow-400 font-bold">!</span>
+                            Bersifat <strong>Case-Sensitive</strong>: <code class="font-mono text-white">darah</code> dan <code class="font-mono text-white">Darah</code> adalah dua variabel yang berbeda.
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-red-400 font-bold">✗</span>
+                            Tidak boleh memakai kata kunci resmi JavaScript (Reserved Keywords) seperti <code class="font-mono text-red-400">function, return, class, let, const, if</code>.
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Format Style Penulisan -->
+                <div class="bg-chainsaw-card border border-slate-700 rounded-2xl p-6 space-y-4">
+                    <h3 class="text-lg font-bold text-chainsaw-red">Gaya Penulisan (Naming Conventions)</h3>
+                    <div class="space-y-3 font-mono text-xs sm:text-sm">
+                        <div class="bg-chainsaw-dark p-3 rounded-lg border border-slate-800">
+                            <span class="text-chainsaw-yellow font-bold">camelCase (Standar Utama JavaScript)</span>
+                            <p class="text-slate-400 text-xs mt-1 font-sans">Kata pertama huruf kecil, kata selanjutnya diawali huruf kapital.</p>
+                            <code class="text-green-400 block mt-1">let namaPemburuIblis = "Denji";</code>
+                        </div>
+
+                        <div class="bg-chainsaw-dark p-3 rounded-lg border border-slate-800">
+                            <span class="text-chainsaw-red font-bold">snake_case</span>
+                            <p class="text-slate-400 text-xs mt-1 font-sans">Menggunakan garis bawah untuk memisahkan antar kata.</p>
+                            <code class="text-green-400 block mt-1">let jumlah_darah = 100;</code>
+                        </div>
+
+                        <div class="bg-chainsaw-dark p-3 rounded-lg border border-slate-800">
+                            <span class="text-chainsaw-blonde font-bold">PascalCase</span>
+                            <p class="text-slate-400 text-xs mt-1 font-sans">Setiap kata diawali dengan huruf kapital (biasanya untuk nama Class).</p>
+                            <code class="text-green-400 block mt-1">class DevilHunter { ... }</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BAB 4: TIPE DATA LENGKAP -->
+        <section id="tipedata" class="space-y-6">
+            <div class="flex items-center gap-3 border-l-4 border-chainsaw-blonde pl-4">
+                <h2 class="text-2xl sm:text-3xl font-black text-white uppercase tracking-wider">
+                    4. Tipe Data Lengkap di JavaScript
+                </h2>
+            </div>
+
+            <!-- Tipe Data Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Tipe Data Primitif -->
+                <div class="bg-chainsaw-card border border-slate-700 rounded-2xl p-6 space-y-4">
+                    <h3 class="text-xl font-bold text-chainsaw-yellow flex items-center gap-2">
+                        <i class="fa-solid fa-cube"></i> Tipe Data Primitif (Nilai Tunggal)
+                    </h3>
+                    <div class="space-y-3 font-mono text-xs sm:text-sm">
+                        <div class="bg-chainsaw-dark p-3 rounded-lg border border-slate-800">
+                            <span class="text-chainsaw-yellow font-bold">1. Number</span>
+                            <p class="text-slate-400 text-xs font-sans mt-0.5">Menyimpan angka bulat, desimal, hingga nilai khusus (<code class="text-yellow-400">NaN</code> & <code class="text-yellow-400">Infinity</code>).</p>
+                            <code class="text-green-400 block mt-1">let hp = 100; let score = 98.5;</code>
+                        </div>
+
+                        <div class="bg-chainsaw-dark p-3 rounded-lg border border-slate-800">
+                            <span class="text-chainsaw-yellow font-bold">2. String</span>
+                            <p class="text-slate-400 text-xs font-sans mt-0.5">Teks dalam tanda petik tunggal, ganda, atau Template Literals backtick (<code class="text-yellow-400">` `</code>).</p>
+                            <code class="text-green-400 block mt-1">let nama = "Denji"; let s = `Hero: ${nama}`;</code>
+                        </div>
+
+                        <div class="bg-chainsaw-dark p-3 rounded-lg border border-slate-800">
+                            <span class="text-chainsaw-yellow font-bold">3. Boolean</span>
+                            <p class="text-slate-400 text-xs font-sans mt-0.5">Nilai kebenaran: hanya <code class="text-green-400">true</code> (benar) atau <code class="text-red-400">false</code> (salah).</p>
+                            <code class="text-green-400 block mt-1">let isDevilHybrid = true;</code>
+                        </div>
+
+                        <div class="bg-chainsaw-dark p-3 rounded-lg border border-slate-800">
+                            <span class="text-chainsaw-yellow font-bold">4. Null vs Undefined</span>
+                            <p class="text-slate-400 text-xs font-sans mt-0.5"><strong>Null</strong> = Nilai sengaja dikosongkan. <strong>Undefined</strong> = Variabel sudah dibuat tapi belum ada isinya.</p>
+                            <code class="text-green-400 block mt-1">let kontr = null; let power; // undefined</code>
+                        </div>
+
+                        <div class="bg-chainsaw-dark p-3 rounded-lg border border-slate-800">
+                            <span class="text-chainsaw-yellow font-bold">5. BigInt & Symbol</span>
+                            <p class="text-slate-400 text-xs font-sans mt-0.5">BigInt untuk angka sangat raksasa, Symbol untuk identifier unik.</p>
+                            <code class="text-green-400 block mt-1">let big = 9007199254740991n;</code>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tipe Data Non-Primitif & Dynamic Typing -->
+                <div class="space-y-6">
+                    <div class="bg-chainsaw-card border border-slate-700 rounded-2xl p-6 space-y-4">
+                        <h3 class="text-xl font-bold text-chainsaw-red flex items-center gap-2">
+                            <i class="fa-solid fa-cubes"></i> Tipe Data Non-Primitif (Kompleks)
+                        </h3>
+                        <div class="space-y-3 font-mono text-xs sm:text-sm">
+                            <div class="bg-chainsaw-dark p-3 rounded-lg border border-slate-800">
+                                <span class="text-chainsaw-red font-bold">Object</span>
+                                <p class="text-slate-400 text-xs font-sans mt-0.5">Kumpulan data dengan pasangan nama properti dan nilainya.</p>
+                                <code class="text-green-400 block mt-1">let denji = { role: "Devil Hunter", hp: 100 };</code>
+                            </div>
+
+                            <div class="bg-chainsaw-dark p-3 rounded-lg border border-slate-800">
+                                <span class="text-chainsaw-red font-bold">Array</span>
+                                <p class="text-slate-400 text-xs font-sans mt-0.5">Daftar sekumpulan data yang tersusun berurutan berdasarkan indeks.</p>
+                                <code class="text-green-400 block mt-1">let senjata = ["Chainsaw", "Axe", "Blood"];</code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Typing -->
+                    <div class="bg-chainsaw-card border border-slate-700 rounded-2xl p-6 space-y-3">
+                        <h3 class="text-xl font-bold text-chainsaw-blonde">Dynamic Typing & Operator typeof</h3>
+                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                            JavaScript bersifat <strong>Dynamically Typed</strong>. Artinya, tipe data variabel disesuaikan secara otomatis berdasarkan nilai yang sedang dimasukkan saat itu. Kita dapat mengecek tipe data menggunakan perintah <code class="text-chainsaw-yellow font-mono">typeof</code>.
+                        </p>
+                        <div class="bg-chainsaw-dark p-3 rounded-lg border border-slate-800 font-mono text-xs space-y-1">
+                            <p class="text-slate-400">let data = 100; <span class="text-green-400">// typeof data -> "number"</span></p>
+                            <p class="text-slate-400">data = "Denji"; <span class="text-green-400">// typeof data -> "string"</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BAB 5: CONSOLE.LOG() -->
+        <section id="console" class="space-y-6">
+            <div class="flex items-center gap-3 border-l-4 border-chainsaw-yellow pl-4">
+                <h2 class="text-2xl sm:text-3xl font-black text-white uppercase tracking-wider">
+                    5. Mengenal console.log() & Cara Output Data
+                </h2>
+            </div>
+
+            <div class="bg-chainsaw-card border border-slate-700 rounded-2xl p-6 sm:p-8 space-y-6 shadow-xl">
+                <p class="text-slate-300 text-base leading-relaxed">
+                    Perintah <code class="text-chainsaw-yellow font-mono font-bold">console.log()</code> adalah alat utama developer untuk menampilkan pesan, isi nilai variabel, atau hasil perhitungan ke dalam terminal/console browser.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-chainsaw-dark p-4 rounded-xl border border-slate-800 space-y-2">
+                        <h4 class="font-bold text-chainsaw-yellow text-sm">1. Output Multiple Values</h4>
+                        <p class="text-xs text-slate-400">Gunakan koma <code class="text-white font-mono">,</code> untuk menampilkan banyak nilai sekaligus.</p>
+                        <code class="text-green-400 text-xs font-mono block">console.log("Hero:", nama, hp);</code>
+                    </div>
+
+                    <div class="bg-chainsaw-dark p-4 rounded-xl border border-slate-800 space-y-2">
+                        <h4 class="font-bold text-chainsaw-red text-sm">2. String Interpolation</h4>
+                        <p class="text-xs text-slate-400">Gunakan backtick <code class="text-white font-mono">` `</code> dan <code class="text-white font-mono">${...}</code> untuk menyisipkan variabel.</p>
+                        <code class="text-green-400 text-xs font-mono block">console.log(`HP Denji: ${hp}`);</code>
+                    </div>
+
+                    <div class="bg-chainsaw-dark p-4 rounded-xl border border-slate-800 space-y-2">
+                        <h4 class="font-bold text-chainsaw-blonde text-sm">3. Evaluasi Ekspresi</h4>
+                        <p class="text-xs text-slate-400">Bisa langsung menghitung matematika atau logika di dalam log.</p>
+                        <code class="text-green-400 text-xs font-mono block">console.log("Total:", 100 - 25);</code>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BAB 6: PAHAMI ERROR DENGAN TENANG -->
+        <section id="errors" class="space-y-6">
+            <div class="flex items-center gap-3 border-l-4 border-chainsaw-red pl-4">
+                <h2 class="text-2xl sm:text-3xl font-black text-white uppercase tracking-wider">
+                    6. Mengenal Error: Error Bukan Berarti Gagal!
+                </h2>
+            </div>
+
+            <div class="bg-chainsaw-card border-2 border-chainsaw-red/50 rounded-2xl p-6 sm:p-8 space-y-6 shadow-xl">
+                <div class="flex items-center gap-4 bg-chainsaw-red/10 border border-chainsaw-red/30 p-4 rounded-xl">
+                    <span class="text-4xl">💡</span>
+                    <div>
+                        <h3 class="text-lg font-bold text-chainsaw-red">Pesan Penting untuk Programmer Pemula:</h3>
+                        <p class="text-xs sm:text-sm text-slate-300">
+                            <strong>Jangan panik jika menemukan warna merah/Error di console!</strong> Error dalam JavaScript bukanlah bukti bahwa Anda gagal, melainkan **petunjuk ramah dari browser** yang memberitahu baris mana yang perlu diperbaiki.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Jenis Error Utama -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    <div class="bg-chainsaw-dark p-5 rounded-xl border border-red-500/40 space-y-3">
+                        <span class="bg-red-500/20 text-red-400 font-mono text-xs px-2 py-1 rounded font-bold">TypeError</span>
+                        <h4 class="font-bold text-white text-base">Kesalahan Tipe / Assignment</h4>
+                        <p class="text-xs text-slate-400">
+                            Terjadi saat kita mencoba mengubah nilai variabel <code class="text-chainsaw-blonde font-mono">const</code> yang sifatnya tetap.
+                        </p>
+                        <div class="bg-slate-900 p-2.5 rounded font-mono text-[11px] text-red-300">
+                            const hero = "Denji";<br>
+                            hero = "Pochita"; <span class="text-slate-500">// ❌ TypeError!</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-chainsaw-dark p-5 rounded-xl border border-yellow-500/40 space-y-3">
+                        <span class="bg-yellow-500/20 text-yellow-400 font-mono text-xs px-2 py-1 rounded font-bold">ReferenceError</span>
+                        <h4 class="font-bold text-white text-base">Variabel Tidak Ditemukan</h4>
+                        <p class="text-xs text-slate-400">
+                            Terjadi saat kita memanggil variabel yang belum pernah dibuat atau dipanggil sebelum inisialisasi (<code class="font-mono">let/const</code>).
+                        </p>
+                        <div class="bg-slate-900 p-2.5 rounded font-mono text-[11px] text-yellow-300">
+                            console.log(power); <span class="text-slate-500">// ❌ ReferenceError!</span><br>
+                            let power = 100;
+                        </div>
+                    </div>
+
+                    <div class="bg-chainsaw-dark p-5 rounded-xl border border-purple-500/40 space-y-3">
+                        <span class="bg-purple-500/20 text-purple-400 font-mono text-xs px-2 py-1 rounded font-bold">SyntaxError</span>
+                        <h4 class="font-bold text-white text-base">Kesalahan Aturan Penulisan</h4>
+                        <p class="text-xs text-slate-400">
+                            Terjadi jika nama variabel melanggar aturan (misal: diawali angka) atau variabel <code class="font-mono">let/const</code> dideklarasikan dua kali.
+                        </p>
+                        <div class="bg-slate-900 p-2.5 rounded font-mono text-[11px] text-purple-300">
+                            let 1denji = "Salah"; <span class="text-slate-500">// ❌ SyntaxError!</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- BAB 7: LIVE PLAYGROUND & CONSOLE SIMULATOR -->
+        <section id="playground" class="space-y-6">
+            <div class="flex items-center justify-between border-l-4 border-chainsaw-yellow pl-4">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-black text-white uppercase tracking-wider">
+                        7. Chainsaw Live Code Playground & Error Simulator
+                    </h2>
+                    <p class="text-xs text-slate-400">Tulis kode JavaScript Anda atau coba simulasi skenario error di bawah ini!</p>
+                </div>
+                <span class="text-3xl">🪚</span>
+            </div>
+
+            <!-- Sandbox Preset Buttons -->
+            <div class="flex flex-wrap gap-2 text-xs font-mono">
+                <span class="text-slate-400 self-center font-sans font-bold">Coba Skenario Preset:</span>
+                <button onclick="loadPreset('normal')" class="px-3 py-1.5 bg-chainsaw-steel hover:bg-slate-700 border border-slate-700 rounded-lg text-chainsaw-yellow transition">
+                    ▶ Kode Normal (Berhasil)
+                </button>
+                <button onclick="loadPreset('typeError')" class="px-3 py-1.5 bg-chainsaw-steel hover:bg-slate-700 border border-slate-700 rounded-lg text-red-400 transition">
+                    ⚠ Skenario TypeError (const)
+                </button>
+                <button onclick="loadPreset('refError')" class="px-3 py-1.5 bg-chainsaw-steel hover:bg-slate-700 border border-slate-700 rounded-lg text-yellow-400 transition">
+                    ⚠ Skenario ReferenceError (TDZ)
+                </button>
+                <button onclick="loadPreset('syntaxError')" class="px-3 py-1.5 bg-chainsaw-steel hover:bg-slate-700 border border-slate-700 rounded-lg text-purple-400 transition">
+                    ⚠ Skenario SyntaxError (Angka)
+                </button>
+            </div>
+
+            <div class="bg-chainsaw-card border-2 border-chainsaw-yellow rounded-2xl overflow-hidden shadow-2xl grid grid-cols-1 lg:grid-cols-2">
+                <!-- Left: Code Editor -->
+                <div class="p-6 space-y-4 border-b lg:border-b-0 lg:border-r border-slate-800 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <label class="text-xs font-mono text-chainsaw-yellow font-bold uppercase">Code Editor (JavaScript):</label>
+                            <button onclick="resetEditor()" class="text-xs text-slate-400 hover:text-white transition"><i class="fa-solid fa-rotate-right"></i> Reset</button>
+                        </div>
+                        <textarea id="code-editor" rows="11" class="w-full bg-chainsaw-dark border border-slate-700 rounded-xl p-4 font-mono text-xs sm:text-sm text-green-400 focus:outline-none focus:border-chainsaw-yellow" spellcheck="false">// Contoh Kode JavaScript Normal
+let hero = "Denji";
+const pochita = "Chainsaw Devil";
+let hp = 100;
+
+hp = hp - 30; // Mengubah isi variabel let
+
+console.log("Nama Hero:", hero);
+console.log(`Kontrak dengan ${pochita}`);
+console.log("Sisa HP Denji:", hp);
+console.log("Tipe data HP:", typeof hp);
+</textarea>
+                    </div>
+
+                    <button onclick="runCustomCode()" class="w-full py-3 bg-gradient-to-r from-chainsaw-yellow to-chainsaw-red text-chainsaw-dark font-black text-lg rounded-xl shadow-lg hover:scale-[1.01] active:scale-[0.99] transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-play"></i> JALANKAN KODE & CEK LOG!
+                    </button>
+                </div>
+
+                <!-- Right: Console Output -->
+                <div class="bg-chainsaw-dark p-6 flex flex-col justify-between font-mono text-xs sm:text-sm">
+                    <div>
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+                            <span class="text-xs text-slate-400 flex items-center gap-2">
+                                <span class="w-2.5 h-2.5 bg-red-500 rounded-full"></span>
+                                <span class="w-2.5 h-2.5 bg-yellow-500 rounded-full"></span>
+                                <span class="w-2.5 h-2.5 bg-green-500 rounded-full"></span>
+                                Live Console Log Terminal
+                            </span>
+                            <span class="text-xs text-chainsaw-yellow font-bold">V8 ENGINE</span>
+                        </div>
+
+                        <div id="live-console" class="space-y-1.5 text-slate-300 min-h-[230px] overflow-y-auto font-mono">
+                            <p class="text-slate-500 italic">> Klik "Jalankan Kode" untuk mengeksekusi script...</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-slate-800 text-[11px] text-slate-400 flex justify-between items-center">
+                        <span>Terminal Status: <strong id="editor-status" class="text-green-400">Ready</strong></span>
+                        <span class="text-chainsaw-yellow">console.log() & Error Catching</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-chainsaw-steel border-t border-slate-800 py-8 px-4 text-center text-xs text-slate-400 space-y-2">
+        <p>Modul Edukasi Pemrograman Web - JavaScript Variabel & Tipe Data</p>
+        <p class="text-white font-bold">Dibuat oleh: <span class="text-chainsaw-yellow font-mono">DZIKRA QEENAN AQMAR</span> (<span class="text-chainsaw-red font-mono">X PPLG 2</span>)</p>
+        <p class="text-slate-500 text-[10px]">Chainsaw Man Edition &copy; 2026 - SMKN 1 Garut</p>
+    </footer>
+
+    <!-- INTERACTIVE SCRIPT LOGIC -->
+    <script>
+        // Smooth Active Nav Highlighting
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 120;
+                if (pageYOffset >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Sandbox Run Code Logic with Detailed Error Display
+        function runCustomCode() {
+            const code = document.getElementById('code-editor').value;
+            const consoleBox = document.getElementById('live-console');
+            const status = document.getElementById('editor-status');
+
+            consoleBox.innerHTML = '';
+            status.innerText = 'Executing...';
+            status.className = 'text-yellow-400';
+
+            // Capture console.log outputs
+            let logs = [];
+            const originalLog = console.log;
+            console.log = function(...args) {
+                logs.push(args.map(arg => typeof arg === 'object' ? JSON.stringify(arg) : arg).join(' '));
+                originalLog.apply(console, args);
+            };
+
+            try {
+                // Execute code safely
+                const runFn = new Function(code);
+                runFn();
+
+                status.innerText = 'Success (0 Errors)';
+                status.className = 'text-green-400';
+
+                if (logs.length === 0) {
+                    consoleBox.innerHTML = '<p class="text-slate-500 italic">> Kode berhasil dijalankan (tidak ada output console.log).</p>';
+                } else {
+                    logs.forEach(log => {
+                        consoleBox.innerHTML += `<p class="text-green-400 font-mono">> ${escapeHtml(log)}</p>`;
+                    });
+                }
+            } catch (err) {
+                status.innerText = 'Error Detected!';
+                status.className = 'text-red-400';
                 
+                let errType = err.name || 'Error';
+                let errBadgeColor = 'bg-red-500/20 text-red-400 border-red-500/40';
+
+                if (errType === 'TypeError') errBadgeColor = 'bg-red-500/20 text-red-400 border-red-500/40';
+                if (errType === 'ReferenceError') errBadgeColor = 'bg-yellow-500/20 text-yellow-400 border-yellow-500/40';
+                if (errType === 'SyntaxError') errBadgeColor = 'bg-purple-500/20 text-purple-400 border-purple-500/40';
+
+                consoleBox.innerHTML = `
+                    <div class="p-3 bg-red-950/40 border border-red-500/30 rounded-lg space-y-2 mt-1">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold border ${errBadgeColor}">${errType}</span>
+                            <span class="text-red-400 font-bold text-xs">⚠️ Pesan Petunjuk Error:</span>
+                        </div>
+                        <p class="text-red-200 font-mono text-xs">${escapeHtml(err.message)}</p>
+                        <p class="text-[11px] text-slate-400 italic">💡 Tips: Error ini memberitahu bagian kode mana yang harus diperbaiki. Jangan menyerah!</p>
+                    </div>
+                `;
+            } finally {
+                console.log = originalLog;
+            }
+        }
+
+        // Presets Code Loader
+        function loadPreset(type) {
+            const editor = document.getElementById('code-editor');
+            if (type === 'normal') {
+                editor.value = `let hero = "Denji";\nconst pochita = "Chainsaw Devil";\nlet hp = 100;\n\nhp = hp - 30;\n\nconsole.log("Nama Hero:", hero);\nconsole.log(\`Kontrak dengan \${pochita}\`);\nconsole.log("Sisa HP Denji:", hp);\nconsole.log("Tipe data HP:", typeof hp);`;
+            } else if (type === 'typeError') {
+                editor.value = `// MENCOBA MENGUBAH VARIABEL CONST (TypeError)\nconst namaKarakter = "Denji";\n\n// Baris ini akan menyebabkan TypeError karena const tidak boleh diubah!\nnamaKarakter = "Pochita";\n\nconsole.log(namaKarakter);`;
+            } else if (type === 'refError') {
+                editor.value = `// MENCOBA MEMANGGIL LET SEBELUM DEKLARASI (ReferenceError / TDZ)\nconsole.log(darahDenji);\n\n// Baris deklarasi ditaruh di bawah:\nlet darahDenji = 100;`;
+            } else if (type === 'syntaxError') {
+                editor.value = `// PENULISAN NAMA VARIABEL SALAH (SyntaxError)\n// Nama variabel dilarang diawali angka!\nlet 1denji = "Hybrid Devil";\n\nconsole.log(1denji);`;
+            }
+            runCustomCode();
+        }
+
+        function resetEditor() {
+            loadPreset('normal');
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+
+        // Run default code on page load
+        window.onload = function() {
+            runCustomCode();
+        };
+    </script>
+</body>
+</html>
