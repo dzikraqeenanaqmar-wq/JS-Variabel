@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LKPD 2: Input, Output & Operator | Chainsaw Man Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        chainsaw: { yellow: '#eab308', red: '#ef4444', steel: '#0f172a', dark: '#090d16', card: '#1e293b' }
+                    },
+                    fontFamily: { sans: ['Space Grotesk', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] }
+                }
+            }
+        }
+    </script>
+    <style>body { background-color: #090d16; color: #FFFFFF; font-family: 'Space Grotesk', sans-serif; }</style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-chainsaw-red selection:text-white">
+
+    <nav class="sticky top-0 z-50 bg-chainsaw-steel/95 backdrop-blur border-b border-chainsaw-yellow/30 px-4 sm:px-8 py-3">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <span class="text-3xl">🪚</span>
+                <div>
+                    <h1 class="text-xl font-black text-chainsaw-yellow tracking-wider">
+                        LKPD 2 <span class="bg-chainsaw-red text-white text-[10px] px-2 py-0.5 rounded font-mono">JAVASCRIPT</span>
+                    </h1>
+                    <p class="text-xs text-slate-400">Input, Output & Operator</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 bg-chainsaw-dark border border-chainsaw-yellow/40 px-3 py-1.5 rounded-xl text-xs">
+                <i class="fa-solid fa-user-astronaut text-chainsaw-yellow"></i>
+                <div class="text-left leading-tight">
+                    <p class="font-bold text-white">DZIKRA QEENAN AQMAR</p>
+                    <p class="text-[10px] text-chainsaw-yellow font-mono">X PPLG 2</p>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="bg-gradient-to-b from-chainsaw-steel via-chainsaw-dark to-chainsaw-dark border-b-4 border-chainsaw-yellow pt-10 pb-12 px-4 text-center space-y-3">
+        <span class="px-3 py-1 bg-chainsaw-red/20 border border-chainsaw-red text-chainsaw-red text-xs font-bold rounded-full">
+            <i class="fa-solid fa-fire"></i> Praktikum LKPD 2 - SMKN 1 Garut
+        </span>
+        <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight">
+            SIMULATOR OPERATOR & <span class="text-chainsaw-yellow underline decoration-chainsaw-red">PROMPT</span>
+        </h1>
+        <p class="text-slate-300 text-sm max-w-xl mx-auto">Uji coba kodingan Aktivitas 1 sampai 9 LKPD Input, Output & Operator di sini.</p>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-10 space-y-8 flex-grow w-full">
+        <div class="bg-chainsaw-card border border-slate-700 rounded-2xl p-5 space-y-3">
+            <h3 class="text-sm font-bold text-chainsaw-yellow font-mono">Pilih Aktivitas LKPD 2:</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-mono">
+                <button onclick="loadCode(1)" class="p-2.5 bg-chainsaw-dark border border-slate-700 rounded-xl text-left hover:border-chainsaw-yellow transition">
+                    <span class="text-chainsaw-yellow font-bold block">Aktivitas 1-2</span> Aritmatika & Modulus
+                </button>
+                <button onclick="loadCode(3)" class="p-2.5 bg-chainsaw-dark border border-slate-700 rounded-xl text-left hover:border-chainsaw-yellow transition">
+                    <span class="text-chainsaw-yellow font-bold block">Aktivitas 3-4</span> Prompt & Umur
+                </button>
+                <button onclick="loadCode(5)" class="p-2.5 bg-chainsaw-dark border border-slate-700 rounded-xl text-left hover:border-chainsaw-yellow transition">
+                    <span class="text-chainsaw-yellow font-bold block">Aktivitas 5-7</span> Kasir & Diskon
+                </button>
+                <button onclick="loadCode(9)" class="p-2.5 bg-chainsaw-dark border border-slate-700 rounded-xl text-left hover:border-chainsaw-yellow transition">
+                    <span class="text-chainsaw-yellow font-bold block">Aktivitas 8-9</span> Debugging & Tabungan
+                </button>
+            </div>
+        </div>
+
+        <div class="bg-chainsaw-card border-2 border-chainsaw-yellow rounded-2xl overflow-hidden shadow-2xl grid grid-cols-1 lg:grid-cols-2">
+            <div class="p-5 space-y-3 border-b lg:border-b-0 lg:border-r border-slate-800 flex flex-col justify-between">
+                <div class="space-y-2">
+                    <label class="text-xs font-mono text-chainsaw-yellow font-bold uppercase">Code Editor LKPD 2:</label>
+                    <textarea id="code-editor" rows="12" class="w-full bg-chainsaw-dark border border-slate-700 rounded-xl p-3 font-mono text-xs text-green-400 focus:outline-none focus:border-chainsaw-yellow" spellcheck="false">let a = 20;
+let b = 4;
+console.log("a + b =", a + b);
+console.log("a - b =", a - b);
+console.log("a * b =", a * b);
+console.log("a / b =", a / b);
+console.log("a % b (Modulus) =", a % b);</textarea>
+                </div>
+                <button onclick="runCode()" class="w-full py-2.5 bg-gradient-to-r from-chainsaw-yellow to-chainsaw-red text-chainsaw-dark font-black text-sm rounded-xl shadow hover:opacity-95 transition">
+                    <i class="fa-solid fa-play"></i> JALANKAN KODE
+                </button>
+            </div>
+
+            <div class="bg-chainsaw-dark p-5 flex flex-col justify-between font-mono text-xs">
+                <div>
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-2 mb-3">
+                        <span class="text-slate-400">Console Terminal Output</span>
+                        <span class="text-chainsaw-yellow font-bold">V8</span>
+                    </div>
+                    <div id="live-console" class="space-y-1 text-slate-300 min-h-[220px] overflow-y-auto">
+                        <p class="text-slate-500 italic">> Klik tombol jalankan...</p>
+                    </div>
+                </div>
+                <div class="mt-3 pt-2 border-t border-slate-800 text-[10px] text-slate-400 flex justify-between">
+                    <span>Status: <strong id="editor-status" class="text-green-400">Ready</strong></span>
+                    <span class="text-chainsaw-yellow">DZIKRA QEENAN AQMAR</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-chainsaw-steel border-t border-slate-800 py-4 px-4 text-center text-xs text-slate-400">
+        <p>DZIKRA QEENAN AQMAR (<span class="text-chainsaw-yellow">X PPLG 2</span>) - SMKN 1 Garut</p>
+    </footer>
+
+    <script>
+        function loadCode(type) {
+            const ed = document.getElementById('code-editor');
+            if (type === 1) {
+                ed.value = `let a = 20;\nlet b = 4;\nconsole.log("a + b =", a + b);\nconsole.log("a - b =", a - b);\nconsole.log("a * b =", a * b);\nconsole.log("a / b =", a / b);\nconsole.log("a % b =", a % b);`;
+            } else if (type === 3) {
+                ed.value = `let nama = prompt("Masukkan nama:");\nlet tahunLahir = Number(prompt("Masukkan tahun lahir:"));\nlet umur = 2026 - tahunLahir;\nconsole.log("Halo " + nama + ", umur kamu: " + umur + " tahun");`;
+            } else if (type === 5) {
+                ed.value = `let makanan = prompt("Nama makanan:");\nlet harga = Number(prompt("Harga:"));\nlet jumlah = Number(prompt("Jumlah:"));\nlet total = harga * jumlah;\nlet diskon = total * 0.1;\nconsole.log("Total: " + total);\nconsole.log("Diskon 10%: " + diskon);\nconsole.log("Total Bayar: " + (total - diskon));`;
+            } else if (type === 9) {
+                ed.value = `let uangAwal = Number(prompt("Uang awal:"));\nlet t1 = Number(prompt("Tabungan hari ke-1:"));\nlet t2 = Number(prompt("Tabungan hari ke-2:"));\nlet t3 = Number(prompt("Tabungan hari ke-3:"));\nlet totalTabungan = uangAwal + t1 + t2 + t3;\nconsole.log("Total tabungan = Rp " + totalTabungan);`;
+            }
+            runCode();
+        }
+
+        function runCode() {
+            const code = document.getElementById('code-editor').value;
+            const cb = document.getElementById('live-console');
+            const st = document.getElementById('editor-status');
+            cb.innerHTML = '';
+            st.innerText = 'Running...';
+            st.className = 'text-yellow-400';
+
+            let logs = [];
+            const oLog = console.log;
+            console.log = function(...args) {
+                logs.push(args.join(' '));
+                oLog.apply(console, args);
+            };
+
+            try {
+                (new Function(code))();
+                st.innerText = 'Success';
+                st.className = 'text-green-400';
+                if (logs.length === 0) cb.innerHTML = '<p class="text-slate-500 italic">> Berhasil (tanpa output log).</p>';
+                else logs.forEach(l => cb.innerHTML += `<p class="text-green-400">> ${l}</p>`);
+            } catch (err) {
+                st.innerText = 'Error';
+                st.className = 'text-red-400';
+                cb.innerHTML = `<p class="text-red-400">⚠️ ${err.name}: ${err.message}</p>`;
+            } finally {
+                console.log = oLog;
+            }
+        }
+        window.onload = runCode;
+    </script>
+</body>
+</html>
