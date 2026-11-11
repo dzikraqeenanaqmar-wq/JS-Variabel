@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="id" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LKPD 3: String, Number & Konversi Data | Chainsaw Man Edition</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Space Grotesk & JetBrains Mono -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        chainsaw: {
+                            yellow: '#eab308',
+                            red: '#ef4444',
+                            steel: '#0f172a',
+                            dark: '#090d16',
+                            card: '#1e293b',
+                            blonde: '#facc15',
+                            blood: '#991b1b'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #090d16;
+            color: #FFFFFF;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #eab308;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ef4444;
+        }
+
+        /* Active Nav Styling */
+        .act-btn.active {
+            border-color: #eab308;
+            background-color: rgba(234, 179, 8, 0.15);
+            color: #facc15;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-chainsaw-red selection:text-white">
+
+    <!-- NAVBAR FIXED -->
+    <nav class="sticky top-0 z-50 bg-chainsaw-steel/95 backdrop-blur border-b border-chainsaw-yellow/30 px-4 sm:px-8 py-3">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <span class="text-3xl animate-bounce">🪚</span>
+                <div>
+                    <h1 class="text-xl font-black text-chainsaw-yellow tracking-wider flex items-center gap-2">
+                        LKPD 3 <span class="bg-chainsaw-red text-white text-[10px] px-2 py-0.5 rounded font-mono uppercase tracking-widest">SMKN 1 GARUT</span>
+                    </h1>
+                    <p class="text-xs text-slate-400">JavaScript: String, Number & Konversi Data</p>
+                </div>
+            </div>
+
+            <!-- Identitas Siswa -->
+            <div class="flex items-center gap-3 bg-chainsaw-dark border border-chainsaw-yellow/40 px-4 py-1.5 rounded-xl text-xs">
+                <div class="w-8 h-8 rounded-lg bg-chainsaw-yellow/20 flex items-center justify-center text-chainsaw-yellow text-base font-bold">
+                    <i class="fa-solid fa-user-ninja"></i>
+                </div>
+                <div class="text-left leading-tight">
+                    <p class="font-bold text-white tracking-wide">DZIKRA QEENAN AQMAR</p>
+                    <p class="text-[10px] text-chainsaw-yellow font-mono font-semibold">X PPLG 2</p>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO HEADER -->
+    <header class="relative bg-gradient-to-b from-chainsaw-steel via-chainsaw-dark to-chainsaw-dark border-b-4 border-chainsaw-yellow pt-8 pb-12 px-4 sm:px-8 overflow-hidden shadow-2xl">
+        <div class="max-w-5xl mx-auto relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+            <div class="md:col-span-2 space-y-3 text-center md:text-left">
+                <div class="inline-flex items-center gap-2 px-3 py-1 bg-chainsaw-red/20 border border-chainsaw-red text-chainsaw-red text-xs font-bold rounded-full">
+                    <i class="fa-solid fa-fire"></i> Modul Praktikum JavaScript #3
+                </div>
+                <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight leading-none">
+                    KUASAI KONVERSI <span class="text-chainsaw-yellow underline decoration-chainsaw-red">STRING & NUMBER</span>!
+                </h1>
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    Pelajari bedanya teks <code class="text-chainsaw-yellow font-mono">"10"</code> dengan angka <code class="text-chainsaw-red font-mono">10</code>, cara menggunakan fungsi <code class="text-green-400 font-mono">Number()</code>, dan mencegah perangkap gabungan teks saat membuat aplikasi Kasir dan Kalkulator!
+                </p>
+            </div>
+
+            <!-- Mascot Badge Pochita -->
+            <div class="flex justify-center">
+                <div class="relative group w-56">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-chainsaw-yellow via-chainsaw-red to-chainsaw-blonde rounded-2xl blur opacity-75 group-hover:opacity-100 transition duration-500"></div>
+                    <div class="relative bg-chainsaw-card border-2 border-chainsaw-yellow p-4 rounded-xl text-center space-y-2">
+                        <div class="w-16 h-16 mx-auto bg-chainsaw-yellow rounded-xl flex items-center justify-center text-chainsaw-dark text-3xl shadow-inner font-black">
+                            🐶
+                        </div>
+                        <h4 class="font-bold text-chainsaw-yellow text-sm">Pochita Approved</h4>
+                        <p class="text-[11px] text-slate-400">"Hati-hati! Tanpa Number(), prompt() akan menggabungkan teks, bukan menghitung angka!"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT / PLAYGROUND -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-8 py-10 space-y-8 flex-grow w-full">
+
+        <!-- RINGKASAN TEORI SINGKAT LKPD 3 -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-chainsaw-card border border-slate-700 p-4 rounded-xl space-y-1.5">
+                <div class="flex items-center gap-2 text-chainsaw-yellow font-bold text-sm">
+                    <i class="fa-solid fa-quote-right"></i>
+                    <span>Tipe Data String</span>
+                </div>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                    Diapit petik <code class="text-yellow-400">"10"</code>. Tanda <code class="text-yellow-400">+</code> pada String berfungsi untuk **menggabungkan teks** (Concatenation).
+                </p>
+            </div>
+
+            <div class="bg-chainsaw-card border border-slate-700 p-4 rounded-xl space-y-1.5">
+                <div class="flex items-center gap-2 text-chainsaw-red font-bold text-sm">
+                    <i class="fa-solid fa-hashtag"></i>
+                    <span>Tipe Data Number</span>
+                </div>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                    Angka murni tanpa petik <code class="text-red-400">10</code>. Tanda <code class="text-red-400">+</code> pada Number berfungsi untuk **penjumlahan matematika**.
+                </p>
+            </div>
+
+            <div class="bg-chainsaw-card border border-slate-700 p-4 rounded-xl space-y-1.5">
+                <div class="flex items-center gap-2 text-chainsaw-blonde font-bold text-sm">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span>Fungsi Number()</span>
+                </div>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                    Mengubah String menjadi Number. Sangat wajib dipakai saat membaca hasil dari <code class="text-green-400 font-mono">prompt()</code>.
+                </p>
+            </div>
+        </div>
+
+        <!-- TOMBOL PRESET AKTIVITAS LKPD 3 -->
+        <div class="bg-chainsaw-card border border-slate-700 rounded-2xl p-5 space-y-3 shadow-xl">
+            <div class="flex items-center justify-between">
+                <h3 class="text-sm font-bold text-chainsaw-yellow font-mono flex items-center gap-2">
+                    <i class="fa-solid fa-code"></i> Pilih Aktivitas Praktikum LKPD 3:
+                </h3>
+                <span class="text-xs text-slate-400 font-mono">Klik untuk muat kode</span>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs font-mono">
+                <button id="btn-act1" onclick="loadActivity(1)" class="act-btn active p-3 bg-chainsaw-dark border border-slate-700 rounded-xl text-left hover:border-chainsaw-yellow transition space-y-1">
+                    <span class="text-chainsaw-yellow font-bold block">Aktivitas 1</span>
+                    <span class="text-[11px] text-slate-400 block font-sans">Eksperimen "10" + "20"</span>
+                </button>
+
+                <button id="btn-act2" onclick="loadActivity(2)" class="act-btn p-3 bg-chainsaw-dark border border-slate-700 rounded-xl text-left hover:border-chainsaw-yellow transition space-y-1">
+                    <span class="text-chainsaw-yellow font-bold block">Aktivitas 2</span>
+                    <span class="text-[11px] text-slate-400 block font-sans">Menemukan typeof</span>
+                </button>
+
+                <button id="btn-act3" onclick="loadActivity(3)" class="act-btn p-3 bg-chainsaw-dark border border-slate-700 rounded-xl text-left hover:border-chainsaw-yellow transition space-y-1">
+                    <span class="text-chainsaw-yellow font-bold block">Aktivitas 3 & 4</span>
+                    <span class="text-[11px] text-slate-400 block font-sans">Number() & Kasir</span>
+                </button>
+
+                <button id="btn-act5" onclick="loadActivity(5)" class="act-btn p-3 bg-chainsaw-dark border border-slate-700 rounded-xl text-left hover:border-chainsaw-yellow transition space-y-1">
+                    <span class="text-chainsaw-yellow font-bold block">Tantangan</span>
+                    <span class="text-[11px] text-slate-400 block font-sans">Kalkulator Rata-Rata</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- SIMULATOR CODE EDITOR & CONSOLE -->
+        <div class="bg-chainsaw-card border-2 border-chainsaw-yellow rounded-2xl overflow-hidden shadow-2xl grid grid-cols-1 lg:grid-cols-2">
+            
+            <!-- Editor (Kiri) -->
+            <div class="p-5 space-y-3 border-b lg:border-b-0 lg:border-r border-slate-800 flex flex-col justify-between">
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between">
+                        <label id="editor-label" class="text-xs font-mono text-chainsaw-yellow font-bold uppercase">Code Editor (Aktivitas 1):</label>
+                        <button onclick="resetCurrentActivity()" class="text-[11px] text-slate-400 hover:text-white transition">
+                            <i class="fa-solid fa-arrow-rotate-left"></i> Reset Kode
+                        </button>
+                    </div>
+                    <textarea id="code-editor" rows="13" class="w-full bg-chainsaw-dark border border-slate-700 rounded-xl p-3 font-mono text-xs text-green-400 focus:outline-none focus:border-chainsaw-yellow" spellcheck="false">// Aktivitas 1: Eksperimen "10" + "20"
+let a = "10";
+let b = "20";
+
+console.log("Output program (a + b) =", a + b);
+console.log("Tipe data a:", typeof a);
+console.log("Tipe data b:", typeof b);
+console.log("Kesimpulan: Tanda + menggabungkan teks (1020), bukan menghitungnya!");</textarea>
+                </div>
+
+                <button onclick="runCode()" class="w-full py-3 bg-gradient-to-r from-chainsaw-yellow to-chainsaw-red text-chainsaw-dark font-black text-sm rounded-xl shadow-lg hover:scale-[1.01] active:scale-[0.99] transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-play"></i> JALANKAN KODE AKTIVITAS
+                </button>
+            </div>
+
+            <!-- Terminal Console (Kanan) -->
+            <div class="bg-chainsaw-dark p-5 flex flex-col justify-between font-mono text-xs">
+                <div>
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-2 mb-3">
+                        <span class="text-slate-400 flex items-center gap-2 text-[11px]">
+                            <span class="w-2.5 h-2.5 bg-red-500 rounded-full"></span>
+                            <span class="w-2.5 h-2.5 bg-yellow-500 rounded-full"></span>
+                            <span class="w-2.5 h-2.5 bg-green-500 rounded-full"></span>
+                            Console Output Terminal
+                        </span>
+                        <span class="text-chainsaw-yellow font-bold text-[11px]">V8 ENGINE</span>
+                    </div>
+
+                    <div id="live-console" class="space-y-1.5 text-slate-300 min-h-[240px] overflow-y-auto font-mono">
+                        <p class="text-slate-500 italic">> Klik "Jalankan Kode Aktivitas" untuk melihat hasil...</p>
+                    </div>
+                </div>
+
+                <div class="mt-3 pt-2 border-t border-slate-800 text-[10px] text-slate-400 flex justify-between items-center">
+                    <span>Status: <strong id="editor-status" class="text-green-400">Ready</strong></span>
+                    <span class="text-chainsaw-yellow font-bold">DZIKRA QEENAN AQMAR</span>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-chainsaw-steel border-t border-slate-800 py-6 px-4 text-center text-xs text-slate-400 space-y-1">
+        <p>Modul Praktikum LKPD 3 - Dasar-Dasar PPLG SMKN 1 Garut</p>
+        <p class="text-white font-bold">Dibuat oleh: <span class="text-chainsaw-yellow font-mono">DZIKRA QEENAN AQMAR</span> (<span class="text-chainsaw-red font-mono">X PPLG 2</span>)</p>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+    <script>
+        let currentAct = 1;
+
+        function loadActivity(actNum) {
+            currentAct = actNum;
+            const ed = document.getElementById('code-editor');
+            const lbl = document.getElementById('editor-label');
+
+            // Reset active button class
+            document.querySelectorAll('.act-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-act${actNum === 4 ? 3 : actNum}`).classList.add('active');
+
+            if (actNum === 1) {
+                lbl.innerText = "Code Editor (Aktivitas 1: Eksperimen 10 + 20):";
+                ed.value = `// Aktivitas 1: Eksperimen "10" + "20"\nlet a = "10";\nlet b = "20";\n\nconsole.log("Output program (a + b) =", a + b);\nconsole.log("Tipe data a:", typeof a);\nconsole.log("Tipe data b:", typeof b);\nconsole.log("Kesimpulan: Tanda + menggabungkan teks (1020), bukan menghitungnya!");`;
+            } else if (actNum === 2) {
+                lbl.innerText = "Code Editor (Aktivitas 2: Menemukan Tipe Data):";
+                ed.value = `// Aktivitas 2: Menemukan Tipe Data\nlet nama = "Asep";\nlet umur = 16;\n\nconsole.log("Isi variabel nama:", nama);\nconsole.log("Tipe data nama:", typeof nama); // string\n\nconsole.log("Isi variabel umur:", umur);\nconsole.log("Tipe data umur:", typeof umur); // number`;
+            } else if (actNum === 3) {
+                lbl.innerText = "Code Editor (Aktivitas 3 & 4: Number() & Kasir):";
+                ed.value = `// Aktivitas 3: Konversi String ke Number()\nlet a = "10";\nlet b = "20";\nlet hasil = Number(a) + Number(b);\nconsole.log("Hasil perbaikan Number(a) + Number(b) =", hasil);\n\n// Aktivitas 4: Kasir Sederhana\nlet harga = Number(prompt("Masukkan harga barang (contoh: 5000):", "5000"));\nlet jumlah = Number(prompt("Masukkan jumlah beli (contoh: 3):", "3"));\nlet total = harga * jumlah;\nconsole.log("--- STRUK KASIR MINI ---");\nconsole.log("Harga Satuan: Rp " + harga);\nconsole.log("Jumlah Beli: " + jumlah);\nconsole.log("Total Belanja = Rp " + total);`;
+            } else if (actNum === 5) {
+                lbl.innerText = "Code Editor (Tantangan: Hitung Nilai Rata-rata):";
+                ed.value = `// Tantangan: Program Hitung Nilai Rata-rata\nlet tugas = Number(prompt("Masukkan nilai Tugas:", "85"));\nlet uts = Number(prompt("Masukkan nilai UTS:", "90"));\nlet uas = Number(prompt("Masukkan nilai UAS:", "80"));\n\nlet totalNilai = tugas + uts + uas;\nlet rataRata = totalNilai / 3;\n\nconsole.log("Nilai Tugas:", tugas);\nconsole.log("Nilai UTS:", uts);\nconsole.log("Nilai UAS:", uas);\nconsole.log("Total Nilai:", totalNilai);\nconsole.log("Rata-rata Nilai =", rataRata.toFixed(2));`;
+            }
+            runCode();
+        }
+
+        function resetCurrentActivity() {
+            loadActivity(currentAct);
+        }
+
+        function runCode() {
+            const code = document.getElementById('code-editor').value;
+            const cb = document.getElementById('live-console');
+            const st = document.getElementById('editor-status');
+
+            cb.innerHTML = '';
+            st.innerText = 'Running...';
+            st.className = 'text-yellow-400 font-bold';
+
+            let logs = [];
+            const originalLog = console.log;
+            console.log = function(...args) {
+                logs.push(args.map(arg => typeof arg === 'object' ? JSON.stringify(arg) : arg).join(' '));
+                originalLog.apply(console, args);
+            };
+
+            try {
+                const runFn = new Function(code);
+                runFn();
+
+                st.innerText = 'Success (0 Errors)';
+                st.className = 'text-green-400 font-bold';
+
+                if (logs.length === 0) {
+                    cb.innerHTML = '<p class="text-slate-500 italic">> Program berhasil dijalankan (tanpa output console.log).</p>';
+                } else {
+                    logs.forEach(log => {
+                        cb.innerHTML += `<p class="text-green-400 font-mono">> ${escapeHtml(log)}</p>`;
+                    });
+                }
+            } catch (err) {
+                st.innerText = 'Error Detected!';
+                st.className = 'text-red-400 font-bold';
+                cb.innerHTML = `
+                    <div class="p-3 bg-red-950/40 border border-red-500/30 rounded-lg space-y-1">
+                        <span class="text-red-400 font-bold text-xs">⚠️ ${err.name || 'Error'}:</span>
+                        <p class="text-red-200 text-xs font-mono">${escapeHtml(err.message)}</p>
+                    </div>
+                `;
+            } finally {
+                console.log = originalLog;
+            }
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+
+        window.onload = function() {
+            runCode();
+        };
+    </script>
+</body>
+</html>
